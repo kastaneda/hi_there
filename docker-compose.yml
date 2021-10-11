@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  web:
+    image: nginx:latest
+    ports:
+      - '8888:80'
+    volumes:
+      - ./app:/app:ro
+      - ./conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    links:
+        - php
+  php:
+    build: docker/php/
+    volumes:
+      - ./app:/app:rw
+      - ./conf/php-misc.ini:/usr/local/etc/php/conf.d/php-misc.ini:ro
+    links:
+        - memcached
+
+  memcached:
+    image: memcached:latest
+    ports:
+     - '11211:11211'
