@@ -3,7 +3,7 @@ version: '3'
 services:
 
   web:
-    image: nginx:latest
+    image: nginx:alpine
     ports:
       - '8888:80'
     volumes:
@@ -18,9 +18,15 @@ services:
       - ./app:/app:rw
       - ./conf/php-misc.ini:/usr/local/etc/php/conf.d/php-misc.ini:ro
     links:
-        - memcached
+        - redis
+#        - memcached
 
-  memcached:
-    image: memcached:latest
+  redis:
+    image: redis:alpine
     ports:
-     - '11211:11211'
+      - '6379:6379'
+
+#  memcached:
+#    image: memcached:alpine
+#    ports:
+#      - '11211:11211'
